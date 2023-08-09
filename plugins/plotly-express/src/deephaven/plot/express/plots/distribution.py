@@ -7,34 +7,39 @@ from plotly import express as px
 
 from deephaven.table import Table
 
-from ._private_utils import validate_common_args, shared_violin, shared_box, \
-    shared_strip, shared_histogram
+from ._private_utils import (
+    validate_common_args,
+    shared_violin,
+    shared_box,
+    shared_strip,
+    shared_histogram,
+)
 from ._update_wrapper import default_callback, unsafe_figure_update_wrapper
 from ..deephaven_figure import DeephavenFigure
 from ..preprocess import preprocess_ecdf
 
 
 def violin(
-        table: Table = None,
-        x: str | list[str] = None,
-        y: str | list[str] = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        color: str | list[str] = None,
-        hover_name: str = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: dict[str | tuple[str], str] = None,
-        violinmode: str = 'group',
-        log_x: bool = False,
-        log_y: bool = False,
-        range_x: list[int] = None,
-        range_y: list[int] = None,
-        points: bool | str = 'outliers',
-        box: bool = False,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    x: str | list[str] = None,
+    y: str | list[str] = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    color: str | list[str] = None,
+    hover_name: str = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: dict[str | tuple[str], str] = None,
+    violinmode: str = "group",
+    log_x: bool = False,
+    log_y: bool = False,
+    range_x: list[int] = None,
+    range_y: list[int] = None,
+    points: bool | str = "outliers",
+    box: bool = False,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a violin chart
 
@@ -119,26 +124,26 @@ def violin(
 
 
 def box(
-        table: Table = None,
-        x: str | list[str] = None,
-        y: str | list[str] = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        color: str | list[str] = None,
-        hover_name: str = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: dict[str | tuple[str], str] = None,
-        boxmode: str = 'group',
-        log_x: bool = False,
-        log_y: bool = False,
-        range_x: list[int] = None,
-        range_y: list[int] = None,
-        points: bool | str = 'outliers',
-        notched: bool = False,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: Callable = default_callback
+    table: Table = None,
+    x: str | list[str] = None,
+    y: str | list[str] = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    color: str | list[str] = None,
+    hover_name: str = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: dict[str | tuple[str], str] = None,
+    boxmode: str = "group",
+    log_x: bool = False,
+    log_y: bool = False,
+    range_x: list[int] = None,
+    range_y: list[int] = None,
+    points: bool | str = "outliers",
+    notched: bool = False,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: Callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a box chart
 
@@ -223,24 +228,24 @@ def box(
 
 
 def strip(
-        table: Table = None,
-        x: str | list[str] = None,
-        y: str | list[str] = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        color: str | list[str] = None,
-        hover_name: str = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: dict[str | tuple[str], str] = None,
-        stripmode: bool | str = 'group',
-        log_x: bool = False,
-        log_y: bool = False,
-        range_x: list[int] = None,
-        range_y: list[int] = None,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: Callable = default_callback
+    table: Table = None,
+    x: str | list[str] = None,
+    y: str | list[str] = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    color: str | list[str] = None,
+    hover_name: str = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: dict[str | tuple[str], str] = None,
+    stripmode: bool | str = "group",
+    log_x: bool = False,
+    log_y: bool = False,
+    range_x: list[int] = None,
+    range_y: list[int] = None,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: Callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a strip chart
 
@@ -319,24 +324,24 @@ def strip(
 
 
 def _ecdf(
-        table: Table = None,
-        x: str | list[str] = None,
-        y: str | list[str] = None,
-        markers: bool = False,
-        lines: bool = True,
-        color_discrete_sequence: list[str] = None,
-        line_dash_sequence: list[str] = None,
-        symbol_sequence: list[str] = None,
-        opacity: float = None,
-        ecdfnorm: str = 'probability',
-        ecdfmode: str = 'standard',
-        log_x: bool = False,
-        log_y: bool = False,
-        range_x: list[int] = None,
-        range_y: list[int] = None,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: Callable = default_callback
+    table: Table = None,
+    x: str | list[str] = None,
+    y: str | list[str] = None,
+    markers: bool = False,
+    lines: bool = True,
+    color_discrete_sequence: list[str] = None,
+    line_dash_sequence: list[str] = None,
+    symbol_sequence: list[str] = None,
+    opacity: float = None,
+    ecdfnorm: str = "probability",
+    ecdfmode: str = "standard",
+    log_x: bool = False,
+    log_y: bool = False,
+    range_x: list[int] = None,
+    range_y: list[int] = None,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: Callable = default_callback,
 ) -> DeephavenFigure:
     """
 
@@ -363,7 +368,7 @@ def _ecdf(
     Returns:
 
     """
-    #todo: not fully implemented
+    # todo: not fully implemented
     line_shape = "hv"
     # rangemode = "tozero"
 
@@ -378,48 +383,46 @@ def _ecdf(
     args.pop("ecdfmode")
 
     update_wrapper = partial(
-        unsafe_figure_update_wrapper,
-        args.pop("unsafe_update_figure")
+        unsafe_figure_update_wrapper, args.pop("unsafe_update_figure")
     )
 
-    create_layered = partial(preprocess_and_layer,
-                             preprocess_ecdf,
-                             px.line, args)
+    create_layered = partial(preprocess_and_layer, preprocess_ecdf, px.line, args)
 
     return update_wrapper(
         create_layered("x") if x else create_layered("y", orientation="h")
     )
 
+
 def histogram(
-        table: Table = None,
-        x: str | list[str] = None,
-        y: str | list[str] = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        color: str | list[str] = None,
-        pattern_shape: str | list[str] = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: dict[str | tuple[str], str] = None,
-        pattern_shape_sequence: list[str] = None,
-        pattern_shape_map: dict[str | tuple[str], str] = None,
-        marginal: str = None,
-        opacity: float = None,
-        barmode: str = 'relative',
-        barnorm: str = None,
-        histnorm: str = None,
-        log_x: bool = False,
-        log_y: bool = False,
-        range_x: list[int] = None,
-        range_y: list[int] = None,
-        range_bins: list[int] = None,
-        histfunc: str = 'count',
-        cumulative: bool = False,
-        nbins: int = 10,
-        text_auto: bool | str = False,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: Callable = default_callback
+    table: Table = None,
+    x: str | list[str] = None,
+    y: str | list[str] = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    color: str | list[str] = None,
+    pattern_shape: str | list[str] = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: dict[str | tuple[str], str] = None,
+    pattern_shape_sequence: list[str] = None,
+    pattern_shape_map: dict[str | tuple[str], str] = None,
+    marginal: str = None,
+    opacity: float = None,
+    barmode: str = "relative",
+    barnorm: str = None,
+    histnorm: str = None,
+    log_x: bool = False,
+    log_y: bool = False,
+    range_x: list[int] = None,
+    range_y: list[int] = None,
+    range_bins: list[int] = None,
+    histfunc: str = "count",
+    cumulative: bool = False,
+    nbins: int = 10,
+    text_auto: bool | str = False,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: Callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a histogram
 

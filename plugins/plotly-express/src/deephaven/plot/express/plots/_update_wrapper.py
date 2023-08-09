@@ -5,9 +5,7 @@ from plotly.graph_objs import Figure
 from ..deephaven_figure import DeephavenFigure
 
 
-def default_callback(
-        fig: Figure
-) -> Figure:
+def default_callback(fig: Figure) -> Figure:
     """A default callback that returns the passed fig
 
     Args:
@@ -21,8 +19,7 @@ def default_callback(
 
 
 def unsafe_figure_update_wrapper(
-        unsafe_figure_update: callable,
-        dh_fig: DeephavenFigure
+    unsafe_figure_update: callable, dh_fig: DeephavenFigure
 ) -> DeephavenFigure:
     """Wrap the callback to be applied last before a figure is returned
 

@@ -16,13 +16,12 @@ class FreqPreprocesser(UnivariatePreprocesser):
         args: dict[str, Any]: The figure creation args
 
     """
+
     def __init__(self, args: dict[str, Any]):
         super().__init__(args)
 
     def preprocess_partitioned_tables(
-            self,
-            tables: list[Table],
-            column: str = None
+        self, tables: list[Table], column: str = None
     ) -> tuple[Table, dict[str, str]]:
         """Preprocess frequency bar params into an appropriate table
         This just sums each value by count
@@ -44,5 +43,6 @@ class FreqPreprocesser(UnivariatePreprocesser):
 
         for table in tables:
             yield table.view([column]).count_by(names["count"], by=column), {
-                self.var: column, self.other_var: names["count"]
+                self.var: column,
+                self.other_var: names["count"],
             }

@@ -5,8 +5,10 @@ import json
 # Name of the plotly figure object that was exported
 NAME = "plotly.figure"
 
+
 def _export_figure(figure):
     return figure.to_json().encode()
+
 
 class FigureType(ObjectType):
     @property

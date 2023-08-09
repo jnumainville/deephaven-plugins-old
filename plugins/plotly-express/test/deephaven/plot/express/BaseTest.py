@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 from deephaven_server import Server
 
+
 class BaseTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -14,8 +15,8 @@ class BaseTestCase(unittest.TestCase):
         cls.setup_exporter_mock()
 
     @classmethod
-    @patch('deephaven.plugin.object.Exporter')
-    @patch('deephaven.plugin.object.Reference')
+    @patch("deephaven.plugin.object.Exporter")
+    @patch("deephaven.plugin.object.Reference")
     def setup_exporter_mock(cls, MockExporter, MockReference):
         cls.exporter = MockExporter()
         cls.reference = MockReference()
@@ -23,5 +24,6 @@ class BaseTestCase(unittest.TestCase):
         cls.reference._index = 0
         cls.exporter.reference.return_value = MockReference()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

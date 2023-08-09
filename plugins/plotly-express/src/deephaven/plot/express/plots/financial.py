@@ -8,19 +8,19 @@ from ..deephaven_figure import draw_ohlc, draw_candlestick, DeephavenFigure
 
 
 def ohlc(
-        table: Table = None,
-        x: str = None,
-        open: str | list[str] = None,
-        high: str | list[str] = None,
-        low: str | list[str] = None,
-        close: str | list[str] = None,
-        increasing_color_sequence: list[str] = None,
-        decreasing_color_sequence: list[str] = None,
-        xaxis_sequence: list[int] = None,
-        yaxis_sequence: list[int] = None,
-        yaxis_titles: list[str] = None,
-        xaxis_titles: list[str] = None,
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    x: str = None,
+    open: str | list[str] = None,
+    high: str | list[str] = None,
+    low: str | list[str] = None,
+    close: str | list[str] = None,
+    increasing_color_sequence: list[str] = None,
+    decreasing_color_sequence: list[str] = None,
+    xaxis_sequence: list[int] = None,
+    yaxis_sequence: list[int] = None,
+    yaxis_titles: list[str] = None,
+    xaxis_titles: list[str] = None,
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """Returns an ohlc chart
 
@@ -82,26 +82,23 @@ def ohlc(
     #   fig.update(layout_xaxis_rangeslider_visible=False)
     args = locals()
 
-    return process_args(args, set(), remap={
-        "x": "x_finance"
-    }, px_func=draw_ohlc)
-
+    return process_args(args, set(), remap={"x": "x_finance"}, px_func=draw_ohlc)
 
 
 def candlestick(
-        table: Table = None,
-        x: str = None,
-        open: str | list[str] = None,
-        high: str | list[str] = None,
-        low: str | list[str] = None,
-        close: str | list[str] = None,
-        increasing_color_sequence: list[str] = None,
-        decreasing_color_sequence: list[str] = None,
-        xaxis_sequence: list[int] = None,
-        yaxis_sequence: list[int] = None,
-        yaxis_titles: list[str] = None,
-        xaxis_titles: list[str] = None,
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    x: str = None,
+    open: str | list[str] = None,
+    high: str | list[str] = None,
+    low: str | list[str] = None,
+    close: str | list[str] = None,
+    increasing_color_sequence: list[str] = None,
+    decreasing_color_sequence: list[str] = None,
+    xaxis_sequence: list[int] = None,
+    yaxis_sequence: list[int] = None,
+    yaxis_titles: list[str] = None,
+    xaxis_titles: list[str] = None,
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a candlestick chart
 
@@ -159,6 +156,4 @@ def candlestick(
     """
     args = locals()
 
-    return process_args(args, set(), remap={
-        "x": "x_finance"
-    }, px_func=draw_candlestick)
+    return process_args(args, set(), remap={"x": "x_finance"}, px_func=draw_candlestick)

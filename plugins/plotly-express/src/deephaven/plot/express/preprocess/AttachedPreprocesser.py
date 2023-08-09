@@ -4,7 +4,7 @@ from .StyleManager import StyleManager
 from ..shared import get_unique_names
 
 
-class AttachedPreprocesser():
+class AttachedPreprocesser:
     """A AttachedPreprocesser that adds styles to "always_attached" plot tables
     such as treemap and pie.
 
@@ -15,6 +15,7 @@ class AttachedPreprocesser():
           to the style map, dictionary, and new column name, to be used for
           AttachedProcessor when dealing with an "always_attached" plot
     """
+
     def __init__(self, args, always_attached):
         self.args = args
         self.always_attached = always_attached
@@ -28,12 +29,16 @@ class AttachedPreprocesser():
         # create new columns
         table = self.args["table"]
         for (arg, col), (map, ls, new_col) in self.always_attached.items():
-            manager_col = get_unique_names(table, [f"{new_col}_manager"])[f"{new_col}_manager"]
+            manager_col = get_unique_names(table, [f"{new_col}_manager"])[
+                f"{new_col}_manager"
+            ]
             style_manager = StyleManager(map=map, ls=ls)
 
-            table = table.update_view([
-                f"{manager_col}=style_manager",
-                f"{new_col}={manager_col}.assign_style({col})"
-            ])
+            table = table.update_view(
+                [
+                    f"{manager_col}=style_manager",
+                    f"{new_col}={manager_col}.assign_style({col})",
+                ]
+            )
 
         self.args["table"] = table

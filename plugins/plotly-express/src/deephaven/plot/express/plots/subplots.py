@@ -10,9 +10,9 @@ from .. import DeephavenFigure
 
 
 def get_shared_key(
-        row: int,
-        col: int,
-        shared_axes: str,
+    row: int,
+    col: int,
+    shared_axes: str,
 ) -> int | None:
     """
     Get a shared key where
@@ -37,13 +37,13 @@ def get_shared_key(
 
 
 def get_new_specs(
-        specs: list[list[dict[str, int | float]]],
-        row_starts: list[float],
-        row_ends: list[float],
-        col_starts: list[float],
-        col_ends: list[float],
-        shared_xaxes: str | bool,
-        shared_yaxes: str | bool
+    specs: list[list[dict[str, int | float]]],
+    row_starts: list[float],
+    row_ends: list[float],
+    col_starts: list[float],
+    col_ends: list[float],
+    shared_xaxes: str | bool,
+    shared_yaxes: str | bool,
 ) -> list[dict[str, list[float] | int]]:
     """Transforms the given specs and row and column lists to specs for layering
 
@@ -90,15 +90,18 @@ def get_new_specs(
             colspan = spec.get("colspan", 1)
             y_1 = row_ends[row + rowspan - 1]
             x_1 = col_ends[col + colspan - 1]
-            new_spec = {
-                "x": [x_0 + l, x_1 - r],
-                "y": [y_0 + t, y_1 - b]
-            }
+            new_spec = {"x": [x_0 + l, x_1 - r], "y": [y_0 + t, y_1 - b]}
 
-            if shared_xaxes and (key := get_shared_key(row, col, shared_xaxes)) is not None:
+            if (
+                shared_xaxes
+                and (key := get_shared_key(row, col, shared_xaxes)) is not None
+            ):
                 new_spec["matched_xaxis"] = key
 
-            if shared_yaxes and (key := get_shared_key(row, col, shared_yaxes)) is not None:
+            if (
+                shared_yaxes
+                and (key := get_shared_key(row, col, shared_yaxes)) is not None
+            ):
                 new_spec["matched_yaxis"] = key
 
             new_specs.append(new_spec)
@@ -107,10 +110,7 @@ def get_new_specs(
 
 
 def make_grid(
-        items: list[Any],
-        rows: int,
-        cols: int,
-        fill: Any = None
+    items: list[Any], rows: int, cols: int, fill: Any = None
 ) -> list[list[Any]]:
     """Make a grid (list of lists) out of the provided items
 
@@ -144,10 +144,7 @@ def make_grid(
     return grid
 
 
-def get_domains(
-        values: list[float],
-        spacing: float
-) -> tuple[list[float], list[float]]:
+def get_domains(values: list[float], spacing: float) -> tuple[list[float], list[float]]:
     """Get the domains from a list of percentage values. The domains are
     cumulative and account for spacing.
 
@@ -182,18 +179,17 @@ def get_domains(
 
 
 def make_subplots(
-        *figs: Figure | DeephavenFigure,
-        rows: int = None,
-        cols: int = None,
-        shared_xaxes: bool | int = None,
-        shared_yaxes: bool | int = None,
-        grid: list[list[Figure | DeephavenFigure]] = None,
-        horizontal_spacing: float = None,
-        vertical_spacing: float = None,
-        column_widths: list[float] = None,
-        row_heights: list[float] = None,
-        specs: list[dict[str, int | float]] |
-               list[list[dict[str, int | float]]] = None,
+    *figs: Figure | DeephavenFigure,
+    rows: int = None,
+    cols: int = None,
+    shared_xaxes: bool | int = None,
+    shared_yaxes: bool | int = None,
+    grid: list[list[Figure | DeephavenFigure]] = None,
+    horizontal_spacing: float = None,
+    vertical_spacing: float = None,
+    column_widths: list[float] = None,
+    row_heights: list[float] = None,
+    specs: list[dict[str, int | float]] | list[list[dict[str, int | float]]] = None,
 ) -> DeephavenFigure:
     """Create subplots. Either figs and at least one of rows and cols or grid
     should be passed.
@@ -259,7 +255,11 @@ def make_subplots(
 
     # only transform specs into a grid when dimensions of figure grid are known
     if specs:
-        specs = specs if isinstance(specs[0], list) else make_grid(specs, rows, cols, fill={})
+        specs = (
+            specs
+            if isinstance(specs[0], list)
+            else make_grid(specs, rows, cols, fill={})
+        )
         specs.reverse()
 
     # same defaults as plotly
@@ -280,7 +280,15 @@ def make_subplots(
     col_starts, col_ends = get_domains(column_widths, horizontal_spacing)
     row_starts, row_ends = get_domains(row_heights, vertical_spacing)
 
-    return layer(*[fig for fig_row in grid for fig in fig_row],
-                 specs=get_new_specs(specs, row_starts, row_ends,
-                                     col_starts, col_ends,
-                                     shared_xaxes, shared_yaxes))
+    return layer(
+        *[fig for fig_row in grid for fig in fig_row],
+        specs=get_new_specs(
+            specs,
+            row_starts,
+            row_ends,
+            col_starts,
+            col_ends,
+            shared_xaxes,
+            shared_yaxes,
+        ),
+    )

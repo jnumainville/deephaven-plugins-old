@@ -20,20 +20,18 @@ class DataMapping:
       _start_index: int: The index (which is an index in the plotly data)
         that this DataMapping starts at
     """
+
     def __init__(
-            self: DataMapping,
-            table: Table,
-            data_mapping: list[dict[str, str]],
-            start_index: int
+        self: DataMapping,
+        table: Table,
+        data_mapping: list[dict[str, str]],
+        start_index: int,
     ):
         self._table = table
         self._data_mapping = data_mapping
         self._start_index = start_index
 
-    def get_links(
-            self: DataMapping,
-            exporter: Exporter
-    ) -> list[dict[Any]]:
+    def get_links(self: DataMapping, exporter: Exporter) -> list[dict[Any]]:
         """Get the json links for this data mapping
 
         Args:
@@ -46,12 +44,10 @@ class DataMapping:
         return json_link_mapping(
             self._data_mapping,
             exporter.reference(self._table)._index,
-            self._start_index)
+            self._start_index,
+        )
 
-    def copy(
-            self: DataMapping,
-            offset: int
-    ) -> DataMapping:
+    def copy(self: DataMapping, offset: int) -> DataMapping:
         """Copy this DataMapping, adding a specific offset to the start_index
 
         Args:

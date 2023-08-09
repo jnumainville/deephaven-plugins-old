@@ -12,48 +12,51 @@ from ..deephaven_figure import DeephavenFigure
 
 
 def scatter(
-        table: Table = None,
-        x: str | list[str] = None,
-        y: str | list[str] = None,
-        error_x: str = None,
-        error_x_minus: str = None,
-        error_y: str = None,
-        error_y_minus: str = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        color: str | list[str] = None,
-        symbol: str | list[str] = None,
-        size: str | list[str] = None,
-        text: str = None,
-        hover_name: str = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        symbol_sequence: list[str] = None,
-        symbol_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        size_sequence: list[int] = None,
-        size_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        color_continuous_scale: list[str] = None,
-        range_color: list[Number] = None,
-        color_continuous_midpoint: Number = None,
-        xaxis_sequence: list[int] = None,
-        yaxis_sequence: list[int] = None,
-        opacity: float = None,
-        marginal_x: str = None,
-        marginal_y: str = None,
-        log_x: bool | list[bool] = False,
-        log_y: bool | list[bool] = False,
-        range_x: list[int] | list[list[int]] = None,
-        range_y: list[int] | list[list[int]] = None,
-        yaxis_titles: list[str] = None,
-        xaxis_titles: list[str] = None,
-        title: str = None,
-        template: str = None,
-        render_mode: str = "webgl",
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    x: str | list[str] = None,
+    y: str | list[str] = None,
+    error_x: str = None,
+    error_x_minus: str = None,
+    error_y: str = None,
+    error_y_minus: str = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    color: str | list[str] = None,
+    symbol: str | list[str] = None,
+    size: str | list[str] = None,
+    text: str = None,
+    hover_name: str = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    symbol_sequence: list[str] = None,
+    symbol_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    size_sequence: list[int] = None,
+    size_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    color_continuous_scale: list[str] = None,
+    range_color: list[Number] = None,
+    color_continuous_midpoint: Number = None,
+    xaxis_sequence: list[int] = None,
+    yaxis_sequence: list[int] = None,
+    opacity: float = None,
+    marginal_x: str = None,
+    marginal_y: str = None,
+    log_x: bool | list[bool] = False,
+    log_y: bool | list[bool] = False,
+    range_x: list[int] | list[list[int]] = None,
+    range_y: list[int] | list[list[int]] = None,
+    yaxis_titles: list[str] = None,
+    xaxis_titles: list[str] = None,
+    title: str = None,
+    template: str = None,
+    render_mode: str = "webgl",
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a scatter chart
 
@@ -225,46 +228,49 @@ def scatter(
 
 
 def scatter_3d(
-        table: Table = None,
-        x: str = None,
-        y: str = None,
-        z: str = None,
-        error_x: str = None,
-        error_x_minus: str = None,
-        error_y: str = None,
-        error_y_minus: str = None,
-        error_z: str = None,
-        error_z_minus: str = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        color: str | list[str] = None,
-        symbol: str | list[str] = None,
-        size: str = None,
-        text: str = None,
-        hover_name: str = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        symbol_sequence: list[str] = None,
-        symbol_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        size_sequence: list[int] = None,
-        size_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        color_continuous_scale: list[str] = None,
-        range_color: list[Number] = None,
-        color_continuous_midpoint: Number = None,
-        opacity: float = None,
-        log_x: bool = False,
-        log_y: bool = False,
-        log_z: bool = False,
-        range_x: list[int] = None,
-        range_y: list[int] = None,
-        range_z: list[int] = None,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    x: str = None,
+    y: str = None,
+    z: str = None,
+    error_x: str = None,
+    error_x_minus: str = None,
+    error_y: str = None,
+    error_y_minus: str = None,
+    error_z: str = None,
+    error_z_minus: str = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    color: str | list[str] = None,
+    symbol: str | list[str] = None,
+    size: str = None,
+    text: str = None,
+    hover_name: str = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    symbol_sequence: list[str] = None,
+    symbol_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    size_sequence: list[int] = None,
+    size_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    color_continuous_scale: list[str] = None,
+    range_color: list[Number] = None,
+    color_continuous_midpoint: Number = None,
+    opacity: float = None,
+    log_x: bool = False,
+    log_y: bool = False,
+    log_z: bool = False,
+    range_x: list[int] = None,
+    range_y: list[int] = None,
+    range_z: list[int] = None,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a 3D scatter chart
 
@@ -415,39 +421,42 @@ def scatter_3d(
 
 
 def scatter_polar(
-        table: Table = None,
-        r: str = None,
-        theta: str = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        color: str | list[str] = None,
-        symbol: str | list[str] = None,
-        size: str = None,
-        text: str = None,
-        hover_name: str = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        symbol_sequence: list[str] = None,
-        symbol_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        size_sequence: list[int] = None,
-        size_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        color_continuous_scale: list[str] = None,
-        range_color: list[Number] = None,
-        color_continuous_midpoint: Number = None,
-        opacity: float = None,
-        direction: str = 'clockwise',
-        start_angle: int = 90,
-        range_r: list[int] = None,
-        range_theta: list[int] = None,
-        log_r: bool = False,
-        title: str = None,
-        template: str = None,
-        render_mode="webgl",
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    r: str = None,
+    theta: str = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    color: str | list[str] = None,
+    symbol: str | list[str] = None,
+    size: str = None,
+    text: str = None,
+    hover_name: str = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    symbol_sequence: list[str] = None,
+    symbol_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    size_sequence: list[int] = None,
+    size_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    color_continuous_scale: list[str] = None,
+    range_color: list[Number] = None,
+    color_continuous_midpoint: Number = None,
+    opacity: float = None,
+    direction: str = "clockwise",
+    start_angle: int = 90,
+    range_r: list[int] = None,
+    range_theta: list[int] = None,
+    log_r: bool = False,
+    title: str = None,
+    template: str = None,
+    render_mode="webgl",
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a polar scatter chart
 
@@ -570,34 +579,37 @@ def scatter_polar(
 
 
 def scatter_ternary(
-        table: Table = None,
-        a: str = None,
-        b: str = None,
-        c: str = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        color: str | list[str] = None,
-        symbol: str | list[str] = None,
-        size: str = None,
-        text: str = None,
-        hover_name: str = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        symbol_sequence: list[str] = None,
-        symbol_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        size_sequence: list[int] = None,
-        size_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        color_continuous_scale: list[str] = None,
-        range_color: list[Number] = None,
-        color_continuous_midpoint: Number = None,
-        opacity: float = None,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    a: str = None,
+    b: str = None,
+    c: str = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    color: str | list[str] = None,
+    symbol: str | list[str] = None,
+    size: str = None,
+    text: str = None,
+    hover_name: str = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    symbol_sequence: list[str] = None,
+    symbol_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    size_sequence: list[int] = None,
+    size_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    color_continuous_scale: list[str] = None,
+    range_color: list[Number] = None,
+    color_continuous_midpoint: Number = None,
+    opacity: float = None,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a ternary scatter chart
 

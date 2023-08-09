@@ -15,9 +15,7 @@ from ..deephaven_figure import generate_figure, DeephavenFigure
 from ._update_wrapper import default_callback
 
 
-def validate_common_args(
-        args: dict
-) -> None:
+def validate_common_args(args: dict) -> None:
     """Validate common args amongst plots
 
     Args:
@@ -28,9 +26,7 @@ def validate_common_args(
         raise ValueError("Argument table is not of type Table")
 
 
-def remap_scene_args(
-        args: dict
-) -> None:
+def remap_scene_args(args: dict) -> None:
     """Remap layout scenes args so that they are not converted to a list
 
     Args:
@@ -38,13 +34,10 @@ def remap_scene_args(
 
     """
     for arg in ["range_x", "range_y", "range_z", "log_x", "log_y", "log_z"]:
-        args[arg + '_scene'] = args.pop(arg)
+        args[arg + "_scene"] = args.pop(arg)
 
 
-def calculate_mode(
-        base_mode: str,
-        args: dict[str, Any]
-) -> str:
+def calculate_mode(base_mode: str, args: dict[str, Any]) -> str:
     """Calculate the mode of the traces based on the arguments
 
     Args:
@@ -58,18 +51,19 @@ def calculate_mode(
 
     """
     modes = [base_mode]
-    if base_mode == "lines" and any([
-        args.get("markers", None),
-        args.get("symbol", None),
-        args.get("symbol_sequence", None),
-        args.get("symbol_map", None),
-        args.get("text", None),
-        args.get("size", None),
-        args.get("size_sequence", None),
-        args.get("size_map", None),
-        "symbol" in args.get("by_vars", []),
-        "size" in args.get("by_vars", []),
-    ]
+    if base_mode == "lines" and any(
+        [
+            args.get("markers", None),
+            args.get("symbol", None),
+            args.get("symbol_sequence", None),
+            args.get("symbol_map", None),
+            args.get("text", None),
+            args.get("size", None),
+            args.get("size_sequence", None),
+            args.get("size_map", None),
+            "symbol" in args.get("by_vars", []),
+            "size" in args.get("by_vars", []),
+        ]
     ):
         modes.append("markers")
     if args.get("text", None):
@@ -77,11 +71,7 @@ def calculate_mode(
     return "+".join(modes)
 
 
-def append_suffixes(
-        args: list[str],
-        suffixes: list[str],
-        sync_dict: SyncDict
-) -> None:
+def append_suffixes(args: list[str], suffixes: list[str], sync_dict: SyncDict) -> None:
     """
     Append the suffixes in the list to the specified arg names. The args should be in sync_dict.
 
@@ -96,10 +86,7 @@ def append_suffixes(
                 sync_dict.d[f"{arg}_{suffix}"] = sync_dict.will_pop(arg)
 
 
-def apply_args_groups(
-        args: dict[str, Any],
-        groups: set[str]
-) -> None:
+def apply_args_groups(args: dict[str, Any], groups: set[str]) -> None:
     """Transform args depending on groups
 
     Args:
@@ -114,17 +101,13 @@ def apply_args_groups(
     if "scatter" in groups:
         args["mode"] = calculate_mode("markers", args)
         append_suffixes(
-            ["color_discrete_sequence", "attached_color"],
-            ["marker"],
-            sync_dict
+            ["color_discrete_sequence", "attached_color"], ["marker"], sync_dict
         )
 
     if "line" in groups:
         args["mode"] = calculate_mode("lines", args)
         append_suffixes(
-            ["color_discrete_sequence", "attached_color"],
-            ["marker", "line"],
-            sync_dict
+            ["color_discrete_sequence", "attached_color"], ["marker", "line"], sync_dict
         )
 
     if "ecdf" in groups:
@@ -132,47 +115,41 @@ def apply_args_groups(
         base_mode = "lines" if args["lines"] or not args["markers"] else "markers"
         args["mode"] = calculate_mode(base_mode, args)
         append_suffixes(
-            ["color_discrete_sequence", "attached_color"],
-            ["marker", "line"],
-            sync_dict
+            ["color_discrete_sequence", "attached_color"], ["marker", "line"], sync_dict
         )
 
-    if 'scene' in groups:
+    if "scene" in groups:
         for arg in ["range_x", "range_y", "range_z", "log_x", "log_y", "log_z"]:
-            args[arg + '_scene'] = args.pop(arg)
+            args[arg + "_scene"] = args.pop(arg)
 
-    if 'bar' in groups:
+    if "bar" in groups:
         append_suffixes(
-            ["color_discrete_sequence", "attached_color"],
-            ["marker"],
-            sync_dict
+            ["color_discrete_sequence", "attached_color"], ["marker"], sync_dict
         )
         append_suffixes(
-            ["pattern_shape_sequence", "attached_pattern_shape"],
-            ["bar"],
-            sync_dict
+            ["pattern_shape_sequence", "attached_pattern_shape"], ["bar"], sync_dict
         )
 
-    if 'marker' in groups:
+    if "marker" in groups:
         append_suffixes(
-            ["color_discrete_sequence", "attached_color"],
-            ["marker"],
-            sync_dict
+            ["color_discrete_sequence", "attached_color"], ["marker"], sync_dict
         )
 
-    if 'always_attached' in groups:
+    if "always_attached" in groups:
         append_suffixes(
-            ["color_discrete_sequence", "attached_color",
-             "pattern_shape_sequence", "attached_pattern_shape"],
+            [
+                "color_discrete_sequence",
+                "attached_color",
+                "pattern_shape_sequence",
+                "attached_pattern_shape",
+            ],
             ["markers"],
-            sync_dict
+            sync_dict,
         )
 
-    if 'area' in groups:
+    if "area" in groups:
         append_suffixes(
-            ["pattern_shape_sequence", "attached_pattern_shape"],
-            ["area"],
-            sync_dict
+            ["pattern_shape_sequence", "attached_pattern_shape"], ["area"], sync_dict
         )
 
     if "webgl" in groups:
@@ -182,12 +159,12 @@ def apply_args_groups(
 
 
 def process_args(
-        args: dict[str, Any],
-        groups: set[str] = None,
-        add: dict[str, Any] = None,
-        pop: list[str] = None,
-        remap: dict[str, str] = None,
-        px_func=Callable
+    args: dict[str, Any],
+    groups: set[str] = None,
+    add: dict[str, Any] = None,
+    pop: list[str] = None,
+    remap: dict[str, str] = None,
+    px_func=Callable,
 ) -> DeephavenFigure:
     """Process the provided args
 
@@ -217,7 +194,9 @@ def process_args(
             args[f"marginal_{var}"] = args.pop("marginal")
 
     draw_figure = partial(generate_figure, draw=px_func)
-    partitioned = PartitionManager(args, draw_figure, groups, marg_args, attach_marginals)
+    partitioned = PartitionManager(
+        args, draw_figure, groups, marg_args, attach_marginals
+    )
 
     apply_args_groups(args, groups)
 
@@ -233,8 +212,7 @@ def process_args(
             args[new_arg] = args.pop(old_arg)
 
     update_wrapper = partial(
-        unsafe_figure_update_wrapper,
-        args.pop("unsafe_update_figure")
+        unsafe_figure_update_wrapper, args.pop("unsafe_update_figure")
     )
 
     return update_wrapper(partitioned.create_figure())
@@ -251,20 +229,14 @@ class SyncDict:
 
     """
 
-    def __init__(
-            self,
-            d: dict
-    ):
+    def __init__(self, d: dict):
         self.d = d
         self.pop_set = set()
 
     def __contains__(self, item):
         return item in self.d
 
-    def will_pop(
-            self,
-            key: Any
-    ) -> Any:
+    def will_pop(self, key: Any) -> Any:
         """Add a key to the set of keys that will eventually be popped
 
         Args:
@@ -277,9 +249,7 @@ class SyncDict:
         self.pop_set.add(key)
         return self.d[key]
 
-    def sync_pop(
-            self
-    ):
+    def sync_pop(self):
         """Pop all elements from the dictionary that have been added to the pop
         set
 
@@ -301,9 +271,7 @@ def set_shared_defaults(args: dict[str, Any]) -> None:
     args["y"] = args.get("y", None)
 
 
-def shared_violin(
-        **args: Any
-) -> DeephavenFigure:
+def shared_violin(**args: Any) -> DeephavenFigure:
     """
 
     Args:
@@ -315,12 +283,12 @@ def shared_violin(
     set_shared_defaults(args)
     args["violinmode"] = args.get("violinmode", "group")
     args["points"] = args.get("points", "outliers")
-    return process_args(args, {"marker", "preprocess_violin", "supports_lists"}, px_func=px.violin)
+    return process_args(
+        args, {"marker", "preprocess_violin", "supports_lists"}, px_func=px.violin
+    )
 
 
-def shared_box(
-        **args: Any
-) -> DeephavenFigure:
+def shared_box(**args: Any) -> DeephavenFigure:
     """
 
     Args:
@@ -332,12 +300,12 @@ def shared_box(
     set_shared_defaults(args)
     args["boxmode"] = args.get("boxmode", "group")
     args["points"] = args.get("points", "outliers")
-    return process_args(args, {"marker", "preprocess_violin", "supports_lists"}, px_func=px.box)
+    return process_args(
+        args, {"marker", "preprocess_violin", "supports_lists"}, px_func=px.box
+    )
 
 
-def shared_strip(
-        **args: Any
-) -> DeephavenFigure:
+def shared_strip(**args: Any) -> DeephavenFigure:
     """
 
     Args:
@@ -348,12 +316,12 @@ def shared_strip(
     """
     set_shared_defaults(args)
     args["stripmode"] = args.get("stripmode", "group")
-    return process_args(args, {"marker", "preprocess_violin", "supports_lists"}, px_func=px.strip)
+    return process_args(
+        args, {"marker", "preprocess_violin", "supports_lists"}, px_func=px.strip
+    )
 
 
-def shared_histogram(
-        **args: Any
-) -> DeephavenFigure:
+def shared_histogram(**args: Any) -> DeephavenFigure:
     """
 
     Args:
@@ -379,9 +347,7 @@ def shared_histogram(
     )
 
 
-def marginal_axis_update(
-        matches: str = None
-) -> dict[str, Any]:
+def marginal_axis_update(matches: str = None) -> dict[str, Any]:
     """Create an update to a marginal axis so it hides much of the axis info
 
     Args:
@@ -395,18 +361,14 @@ def marginal_axis_update(
     return {
         "matches": matches,
         "title": {},
-        'showgrid': False,
-        'showline': False,
-        'showticklabels': False,
-        'ticks': ''
+        "showgrid": False,
+        "showline": False,
+        "showticklabels": False,
+        "ticks": "",
     }
 
 
-def create_marginal(
-        marginal: str,
-        args: dict[str, Any],
-        which: str
-) -> DeephavenFigure:
+def create_marginal(marginal: str, args: dict[str, Any], which: str) -> DeephavenFigure:
     """Create a marginal figure
 
     Args:
@@ -424,7 +386,7 @@ def create_marginal(
         "histogram": shared_histogram,
         "violin": shared_violin,
         "rug": shared_strip,
-        "box": shared_box
+        "box": shared_box,
     }
 
     fig_marg = marginal_map[marginal](**args)
@@ -438,10 +400,10 @@ def create_marginal(
 
 
 def attach_marginals(
-        fig: DeephavenFigure,
-        args: dict[str, Any],
-        marginal_x: str = None,
-        marginal_y: str = None
+    fig: DeephavenFigure,
+    args: dict[str, Any],
+    marginal_x: str = None,
+    marginal_y: str = None,
 ) -> DeephavenFigure:
     """Create and attach marginals to the provided figure.
 
@@ -460,59 +422,51 @@ def attach_marginals(
     """
     figs = [fig]
 
-    data = {
-        "x": args.pop("x"),
-        "y": args.pop("y")
-    }
+    data = {"x": args.pop("x"), "y": args.pop("y")}
 
     specs = []
 
     if marginal_x:
-        x_args = {
-            **args,
-            "x": data["x"]
-        }
+        x_args = {**args, "x": data["x"]}
         figs.append(create_marginal(marginal_x, x_args, "x"))
         specs = [
-            {'y': [0, 0.74]},
+            {"y": [0, 0.74]},
             {
-                'y': [0.75, 1],
+                "y": [0.75, 1],
                 "xaxis_update": marginal_axis_update("x"),
                 "yaxis_update": marginal_axis_update(),
             },
         ]
 
     if marginal_y:
-        y_args = {
-            **args,
-            "y": data["y"]
-        }
+        y_args = {**args, "y": data["y"]}
         figs.append(create_marginal(marginal_y, y_args, "y"))
         if specs:
             specs[0]["x"] = [0, 0.745]
             specs[1]["x"] = [0, 0.745]
             specs.append(
                 {
-                    'x': [0.75, 1], 'y': [0, 0.74],
+                    "x": [0.75, 1],
+                    "y": [0, 0.74],
                     "yaxis_update": marginal_axis_update("y"),
                     "xaxis_update": marginal_axis_update(),
-                })
+                }
+            )
 
         else:
             specs = [
-                {'x': [0, 0.745]},
-                {'x': [0.75, 1],
-                 "yaxis_update": marginal_axis_update("y"),
-                 "xaxis_update": marginal_axis_update(),
-                 },
+                {"x": [0, 0.745]},
+                {
+                    "x": [0.75, 1],
+                    "yaxis_update": marginal_axis_update("y"),
+                    "xaxis_update": marginal_axis_update(),
+                },
             ]
 
     return layer(*figs, specs=specs) if specs else fig
 
 
-def get_marg_args(
-        args: dict[str, Any]
-) -> dict[str, Any]:
+def get_marg_args(args: dict[str, Any]) -> dict[str, Any]:
     """Copy the required args into data and style for marginal creation
 
     Args:
@@ -524,8 +478,15 @@ def get_marg_args(
 
     """
     marg_args = {
-        "x", "y", "by", "by_vars", "color", "hover_name", "labels",
-        "color_discrete_sequence", "color_discrete_map",
+        "x",
+        "y",
+        "by",
+        "by_vars",
+        "color",
+        "hover_name",
+        "labels",
+        "color_discrete_sequence",
+        "color_discrete_map",
     }
 
     new_args = {}

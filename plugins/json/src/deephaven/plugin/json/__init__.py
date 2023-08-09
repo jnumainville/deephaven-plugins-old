@@ -3,8 +3,7 @@ from __future__ import annotations
 import json
 
 from deephaven.plugin import Registration
-from deephaven.plugin.object \
-    import Exporter, ObjectType, Reference
+from deephaven.plugin.object import Exporter, ObjectType, Reference
 
 __version__ = "0.0.1.dev4"
 
@@ -51,9 +50,7 @@ class Encoder(json.JSONEncoder):
             # Note: serializing type is extraneous,
             # but it makes our testing easier. Should
             # we provide a way to turn type serialization on/off?
-            return {
-                'type': obj.type,
-                'index': obj.index}
+            return {"type": obj.type, "index": obj.index}
 
         # Try to create a reference with a known type
         ref = self._exporter.reference(obj, allow_unknown_type=False)
@@ -83,7 +80,7 @@ class JsonType(ObjectType):
 
     def to_bytes(self, exporter: Exporter, node: Node) -> bytes:
         encoder_kw = dict(node.kw)
-        encoder_cls = encoder_kw.pop('cls', Encoder)
+        encoder_cls = encoder_kw.pop("cls", Encoder)
         if issubclass(encoder_cls, Encoder):
             encoder = encoder_cls(exporter, **encoder_kw)
         else:

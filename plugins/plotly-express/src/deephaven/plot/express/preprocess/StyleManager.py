@@ -21,9 +21,9 @@ class StyleManager:
     """
 
     def __init__(
-            self,
-            ls: list[str] = None,
-            map: dict[str, str] = None,
+        self,
+        ls: list[str] = None,
+        map: dict[str, str] = None,
     ):
         self.ls = ls if isinstance(ls, list) else [ls]
         self.map = map
@@ -31,10 +31,7 @@ class StyleManager:
         self.cycled = cycle(self.ls)
         self.found = {}
 
-    def assign_style(
-            self,
-            val: str
-    ) -> str:
+    def assign_style(self, val: str) -> str:
         """
         Assign and return a style for the specified value.
 

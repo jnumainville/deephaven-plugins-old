@@ -11,10 +11,7 @@ from deephaven.plugin.object import Exporter
 from ..data_mapping import DataMapping
 
 
-def export_figure(
-        exporter: Exporter,
-        figure: DeephavenFigure
-) -> bytes:
+def export_figure(exporter: Exporter, figure: DeephavenFigure) -> bytes:
     """Helper to export a DeephavenFigure as json
 
     Args:
@@ -28,9 +25,7 @@ def export_figure(
     return figure.to_json(exporter).encode()
 
 
-def has_color_args(
-        call_args: dict[str, Any]
-) -> bool:
+def has_color_args(call_args: dict[str, Any]) -> bool:
     """Check if any of the color args are in call_args
 
     Args:
@@ -40,8 +35,7 @@ def has_color_args(
       bool: True if color args are in, false otherwise
 
     """
-    for arg in ["color_discrete_sequence_line",
-                "color_discrete_sequence_marker"]:
+    for arg in ["color_discrete_sequence_line", "color_discrete_sequence_marker"]:
         # convert to bool to ensure empty lists don't prevent removal of
         # colors on traces
         if arg in call_args and bool(call_args[arg]):
@@ -49,10 +43,7 @@ def has_color_args(
     return False
 
 
-def has_arg(
-        call_args: dict[str, Any],
-        check: str | Callable
-) -> bool:
+def has_arg(call_args: dict[str, Any], check: str | Callable) -> bool:
     """Given either a string to check for in call_args or function to check,
     return True if the arg is in the call_args
 
@@ -93,15 +84,15 @@ class DeephavenFigure:
     """
 
     def __init__(
-            self: DeephavenFigure,
-            fig: Figure = None,
-            call: Callable = None,
-            call_args: dict[Any] = None,
-            data_mappings: list[DataMapping] = None,
-            has_template: bool = False,
-            has_color: bool = False,
-            trace_generator: Generator[dict[str, Any]] = None,
-            has_subplots: bool = False,
+        self: DeephavenFigure,
+        fig: Figure = None,
+        call: Callable = None,
+        call_args: dict[Any] = None,
+        data_mappings: list[DataMapping] = None,
+        has_template: bool = False,
+        has_color: bool = False,
+        trace_generator: Generator[dict[str, Any]] = None,
+        has_subplots: bool = False,
     ):
         # keep track of function that called this and it's args
         self.fig = fig
@@ -109,20 +100,17 @@ class DeephavenFigure:
         self.call_args = call_args
         self.trace_generator = trace_generator
 
-        self.has_template = has_template if has_template else \
-            has_arg(call_args, "template")
+        self.has_template = (
+            has_template if has_template else has_arg(call_args, "template")
+        )
 
-        self.has_color = has_color if has_color else \
-            has_arg(call_args, has_color_args)
+        self.has_color = has_color if has_color else has_arg(call_args, has_color_args)
 
         self._data_mappings = data_mappings if data_mappings else []
 
         self.has_subplots = has_subplots
 
-    def copy_mappings(
-            self: DeephavenFigure,
-            offset: int = 0
-    ) -> list[DataMapping]:
+    def copy_mappings(self: DeephavenFigure, offset: int = 0) -> list[DataMapping]:
         """Copy all DataMappings within this figure, adding a specific offset
 
         Args:
@@ -135,8 +123,7 @@ class DeephavenFigure:
         return [mapping.copy(offset) for mapping in self._data_mappings]
 
     def get_json_links(
-            self: DeephavenFigure,
-            exporter: Exporter
+        self: DeephavenFigure, exporter: Exporter
     ) -> list[dict[str, str]]:
         """Convert the internal data mapping to the JSON data mapping with
         tables and proper plotly indices attached
@@ -149,13 +136,13 @@ class DeephavenFigure:
             to the plotly figure
 
         """
-        return [links for mapping in self._data_mappings
-                for links in mapping.get_links(exporter)]
+        return [
+            links
+            for mapping in self._data_mappings
+            for links in mapping.get_links(exporter)
+        ]
 
-    def to_dict(
-            self: DeephavenFigure,
-            exporter: Exporter
-    ) -> dict[str, Any]:
+    def to_dict(self: DeephavenFigure, exporter: Exporter) -> dict[str, Any]:
         """Convert the DeephavenFigure to dict
 
         Args:
@@ -167,10 +154,7 @@ class DeephavenFigure:
         """
         return json.loads(self.to_json(exporter))
 
-    def to_json(
-            self: DeephavenFigure,
-            exporter: Exporter
-    ) -> str:
+    def to_json(self: DeephavenFigure, exporter: Exporter) -> str:
         """Convert the DeephavenFigure to JSON
 
         Args:
@@ -185,10 +169,7 @@ class DeephavenFigure:
         deephaven = {
             "mappings": mappings,
             "is_user_set_template": self.has_template,
-            "is_user_set_color": self.has_color
+            "is_user_set_color": self.has_color,
         }
-        payload = {
-            "plotly": plotly,
-            "deephaven": deephaven
-        }
+        payload = {"plotly": plotly, "deephaven": deephaven}
         return json.dumps(payload)

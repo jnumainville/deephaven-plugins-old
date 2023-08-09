@@ -10,19 +10,19 @@ from ..deephaven_figure import DeephavenFigure
 
 
 def pie(
-        table: Table = None,
-        names: str = None,
-        values: str = None,
-        color: str | list[str] = None,
-        hover_name: str = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: dict[str, str] = None,
-        title: str = None,
-        template: str = None,
-        opacity: float = None,
-        hole: float = None,
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    names: str = None,
+    values: str = None,
+    color: str | list[str] = None,
+    hover_name: str = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: dict[str, str] = None,
+    title: str = None,
+    template: str = None,
+    opacity: float = None,
+    hole: float = None,
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a pie chart
 

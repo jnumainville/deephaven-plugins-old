@@ -20,11 +20,8 @@ class UnivariatePreprocesser:
           there is a list, otherwise the arg passed to var
         cols: list[str]: The columns that are being used
     """
-    def __init__(
-            self,
-            args: dict[str, Any],
-            pivot_vars: dict[str, str] = None
-    ):
+
+    def __init__(self, args: dict[str, Any], pivot_vars: dict[str, str] = None):
         self.args = args
         self.table = args["table"]
         self.var = "x" if args["x"] else "y"

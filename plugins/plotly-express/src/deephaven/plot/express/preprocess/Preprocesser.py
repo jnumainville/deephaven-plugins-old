@@ -28,12 +28,13 @@ class Preprocesser:
 
 
     """
+
     def __init__(
-            self,
-            args: dict[str, Any],
-            groups: set[str],
-            always_attached: dict[tuple[str, str], tuple[dict[str, str], list[str], str]],
-            pivot_vars: dict[str, str]
+        self,
+        args: dict[str, Any],
+        groups: set[str],
+        always_attached: dict[tuple[str, str], tuple[dict[str, str], list[str], str]],
+        pivot_vars: dict[str, str],
     ):
         self.args = args
         self.groups = groups
@@ -58,9 +59,7 @@ class Preprocesser:
             self.preprocesser = TimePreprocesser(self.args)
 
     def preprocess_partitioned_tables(
-            self,
-            tables: list[Table],
-            column: str = None
+        self, tables: list[Table], column: str = None
     ) -> Generator[Table]:
         """
         Preprocess the passed table, depending on the type of preprocessor used

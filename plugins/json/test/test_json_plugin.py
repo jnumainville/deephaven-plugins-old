@@ -20,10 +20,9 @@ class TestExporter(Exporter):
         self._objects = []
         self._refs = []
 
-    def reference(self,
-                  object,
-                  allow_unknown_type: bool = False,
-                  force_new: bool = False) -> Optional[Reference]:
+    def reference(
+        self, object, allow_unknown_type: bool = False, force_new: bool = False
+    ) -> Optional[Reference]:
         if not force_new:
             ix = 0
             for o in self._objects:
@@ -36,7 +35,8 @@ class TestExporter(Exporter):
         ref = Reference(
             len(self._refs),
             object_type.name if object_type else None,
-            b'Not-Real-Server')
+            b"Not-Real-Server",
+        )
         self._objects.append(object)
         self._refs.append(ref)
         return ref
@@ -46,31 +46,36 @@ class TestJsonPluginLocal(unittest.TestCase):
     def test_plain_python_types(self):
         from deephaven.plugin.json import Encoder
         from .plain_python_types import output
+
         # Exporter not needed for simple types
         actual_json = json.loads(Encoder(None).encode(output))
-        expected_json = read_json('plain_python_types.json')
+        expected_json = read_json("plain_python_types.json")
         self.assertEqual(actual_json, expected_json)
 
     def test_nested_node_types(self):
         from deephaven.plugin.json import Encoder
         from .nested_node_types import output
+
         actual_json = json.loads(Encoder(TestExporter()).encode(output))
-        expected_json = read_json('nested_node_types.json')
+        expected_json = read_json("nested_node_types.json")
         self.assertEqual(actual_json, expected_json)
 
     def test_nested_other_types(self):
         from deephaven.plugin.json import Encoder
         from .nested_other_types import output
+
         actual_json = json.loads(Encoder(TestExporter()).encode(output))
-        expected_json = read_json('nested_other_types.json')
+        expected_json = read_json("nested_other_types.json")
         self.assertEqual(actual_json, expected_json)
 
     def test_unknown_python_types(self):
         from deephaven.plugin.json import Encoder
         from .unknown_python_types import output
+
         actual_json = json.loads(Encoder(TestExporter()).encode(output))
-        expected_json = read_json('unknown_python_types.json')
+        expected_json = read_json("unknown_python_types.json")
         self.assertEqual(actual_json, expected_json)
+
 
 # class TestJsonPluginRemote(unittest.TestCase):
 #     def execute_code(self, code: str):
@@ -97,5 +102,5 @@ class TestJsonPluginLocal(unittest.TestCase):
 #         self.check_json('nested_other_types')
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

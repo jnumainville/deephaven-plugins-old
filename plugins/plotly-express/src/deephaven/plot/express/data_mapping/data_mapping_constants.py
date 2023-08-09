@@ -25,7 +25,7 @@ OVERRIDES = {
     "names": "labels",
     "x_start": "base",
     "color": "marker/color",
-    "colors": "marker/colors"
+    "colors": "marker/colors",
 }
 
 # x_end is not used, the calculations are made in preprocessing step and passed to x

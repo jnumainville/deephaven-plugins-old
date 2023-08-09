@@ -22,12 +22,10 @@ PARTITION_ARGS = {
     "symbol": ("symbol_sequence", "symbol_map"),
     "size": ("size_sequence", "size_map"),
     "line_dash": ("line_dash_sequence", "line_dash_map"),
-    "width": ("width_sequence", "width_map")
+    "width": ("width_sequence", "width_map"),
 }
 
-FACET_ARGS = {
-    "facet_row", "facet_col"
-}
+FACET_ARGS = {"facet_row", "facet_col"}
 
 NUMERIC_TYPES = {
     "short",
@@ -49,8 +47,7 @@ STYLE_DEFAULTS = {
 
 
 def get_partition_key_column_tuples(
-        key_column_table: DataFrame,
-        columns: list[str]
+    key_column_table: DataFrame, columns: list[str]
 ) -> list[tuple[Any]]:
     """
 
@@ -69,7 +66,7 @@ def get_partition_key_column_tuples(
 
 
 def numeric_column_set(
-        table: Table,
+    table: Table,
 ) -> set[str]:
     """Gets the set of numeric columns in the table
 
@@ -87,10 +84,7 @@ def numeric_column_set(
     return numeric_cols
 
 
-def is_single_numeric_col(
-        val: str | list[str],
-        numeric_cols: set[str]
-) -> bool:
+def is_single_numeric_col(val: str | list[str], numeric_cols: set[str]) -> bool:
     """
     Get whether the val is a single numeric column or not
 
@@ -135,15 +129,15 @@ class PartitionManager:
           passed in if already created)
         draw_figure: Callable: The function used to draw the figure
     """
-    def __init__(
-            self,
-            args: dict[str, Any],
-            draw_figure: Callable,
-            groups: set[str],
-            marg_args: dict[str, any],
-            marg_func: Callable
-    ):
 
+    def __init__(
+        self,
+        args: dict[str, Any],
+        draw_figure: Callable,
+        groups: set[str],
+        marg_args: dict[str, any],
+        marg_func: Callable,
+    ):
         self.by_vars = None
         self.list_var = None
         self.cols = None
@@ -201,7 +195,7 @@ class PartitionManager:
         self.args["pivot_vars"] = self.pivot_vars
 
     def convert_table_to_long_mode(
-            self,
+        self,
     ) -> None:
         """
         Convert a table to long mode if thie plot supports lists
@@ -224,11 +218,7 @@ class PartitionManager:
 
         args["table"] = self.to_long_mode(table, self.cols)
 
-    def is_by(
-            self,
-            arg: str,
-            map_val: str | list[str] = None
-    ) -> None:
+    def is_by(self, arg: str, map_val: str | list[str] = None) -> None:
         """
         Given that the specific arg is a by arg, prepare the arg depending on
         if it is attached or not
@@ -243,7 +233,11 @@ class PartitionManager:
 
         if "always_attached" in self.groups:
             new_col = get_unique_names(self.args["table"], [arg])[arg]
-            self.always_attached[(arg, self.args[arg])] = (map_val, self.args[seq_arg], new_col)
+            self.always_attached[(arg, self.args[arg])] = (
+                map_val,
+                self.args[seq_arg],
+                new_col,
+            )
             # a new column will be constructed so this color is always updated
             self.args[f"attached_{arg}"] = new_col
             self.args.pop(arg)
@@ -259,9 +253,7 @@ class PartitionManager:
             self.args[f"{arg}_by"] = self.args.pop(arg)
 
     def handle_plot_by_arg(
-            self,
-            arg: str,
-            val: str | list[str]
+        self, arg: str, val: str | list[str]
     ) -> tuple[str, str | list[str]]:
         """
         Handle all args that are possibly plot bys.
@@ -302,7 +294,11 @@ class PartitionManager:
             elif map_ == "identity":
                 args.pop(map_name)
                 args["attached_color"] = args.pop("color")
-            elif val and is_single_numeric_col(val, numeric_cols) and "color_continuous_scale" in self.args:
+            elif (
+                val
+                and is_single_numeric_col(val, numeric_cols)
+                and "color_continuous_scale" in self.args
+            ):
                 if "always_attached" in self.groups:
                     args["colors"] = args.pop("color")
                 # just keep the argument in place so it can be passed to plotly
@@ -310,7 +306,9 @@ class PartitionManager:
                 pass
             elif val:
                 self.is_by(arg, args[map_name])
-            elif plot_by_cols and (args.get("color_discrete_sequence") or "color" in self.by_vars):
+            elif plot_by_cols and (
+                args.get("color_discrete_sequence") or "color" in self.by_vars
+            ):
                 # this needs to be last as setting "color" in any sense will override
                 if not self.args["color_discrete_sequence"]:
                     self.args["color_discrete_sequence"] = STYLE_DEFAULTS[arg]
@@ -351,9 +349,7 @@ class PartitionManager:
 
         return f"{arg}_by", args.get(f"{arg}_by", None)
 
-    def process_partitions(
-            self
-    ) -> Table | PartitionedTable:
+    def process_partitions(self) -> Table | PartitionedTable:
         """
         Process the partitions. This will pull the arguments that are plot bys
         then combine them into a dictionary.
@@ -404,25 +400,31 @@ class PartitionManager:
             partition_cols.add(self.pivot_vars["variable"])
 
         # preprocessor needs to be initialized after the always attached arguments are found
-        self.preprocessor = Preprocesser(args, self.groups, self.always_attached, self.pivot_vars)
+        self.preprocessor = Preprocesser(
+            args, self.groups, self.always_attached, self.pivot_vars
+        )
 
         if partition_cols:
             if not partitioned_table:
                 partitioned_table = args["table"].partition_by(list(partition_cols))
 
-            key_column_table = dhpd.to_pandas(partitioned_table.table.select_distinct(partitioned_table.key_columns))
+            key_column_table = dhpd.to_pandas(
+                partitioned_table.table.select_distinct(partitioned_table.key_columns)
+            )
             for arg_by, val in partition_map.items():
                 # remove "by" from arg
                 arg = arg_by[:-3]
                 if arg in PARTITION_ARGS and isinstance(PARTITION_ARGS[arg], tuple):
                     # replace the sequence with the sequence, map and distinct keys
                     # so they can be easily used together
-                    keys = get_partition_key_column_tuples(key_column_table, val if isinstance(val, list) else [val])
+                    keys = get_partition_key_column_tuples(
+                        key_column_table, val if isinstance(val, list) else [val]
+                    )
                     sequence, map_ = PARTITION_ARGS[arg]
                     args[sequence] = {
                         "ls": args[sequence],
                         "map_": args[map_],
-                        "keys": keys
+                        "keys": keys,
                     }
                     args.pop(arg_by)
                     args.pop(PARTITION_ARGS[arg][1])
@@ -434,10 +436,7 @@ class PartitionManager:
         args.pop("by_vars", None)
         return args["table"]
 
-    def build_ternary_chain(
-            self,
-            cols: list[str]
-    ) -> str:
+    def build_ternary_chain(self, cols: list[str]) -> str:
         """
         Build a ternary chain that will collapse the columns into one
 
@@ -455,11 +454,7 @@ class PartitionManager:
                 ternary_string += f"{self.pivot_vars['variable']} == `{col}` ? {col} : "
         return ternary_string
 
-    def to_long_mode(
-            self,
-            table: Table,
-            cols: list[str]
-    ) -> Table:
+    def to_long_mode(self, table: Table, cols: list[str]) -> Table:
         """
         Convert a table to long mode. This will take the name of the columns,
         make a new "variable" column that contains the column names, and create
@@ -475,7 +470,9 @@ class PartitionManager:
         """
         new_tables = []
         for col in cols:
-            new_tables.append(table.update_view(f"{self.pivot_vars['variable']} = `{col}`"))
+            new_tables.append(
+                table.update_view(f"{self.pivot_vars['variable']} = `{col}`")
+            )
 
         merged = merge(new_tables)
 
@@ -492,12 +489,17 @@ class PartitionManager:
             dict[str, str]: The partition dictionary mapping column to value
         """
         for table in self.partitioned_table.constituent_tables:
-            key_column_table = dhpd.to_pandas(table.select_distinct(self.partitioned_table.key_columns))
-            current_partition = dict(zip(
-                self.partitioned_table.key_columns,
-                get_partition_key_column_tuples(key_column_table,
-                                                self.partitioned_table.key_columns)[0]
-            ))
+            key_column_table = dhpd.to_pandas(
+                table.select_distinct(self.partitioned_table.key_columns)
+            )
+            current_partition = dict(
+                zip(
+                    self.partitioned_table.key_columns,
+                    get_partition_key_column_tuples(
+                        key_column_table, self.partitioned_table.key_columns
+                    )[0],
+                )
+            )
             yield current_partition
 
     def table_partition_generator(self) -> Generator[tuple[Table, dict[str, str]]]:
@@ -538,9 +540,15 @@ class PartitionManager:
 
                 args["table"] = table
                 yield args
-        elif "preprocess_hist" in self.groups or "preprocess_freq" in self.groups or "preprocess_time" in self.groups:
+        elif (
+            "preprocess_hist" in self.groups
+            or "preprocess_freq" in self.groups
+            or "preprocess_time" in self.groups
+        ):
             # still need to preprocess the base table
-            table, arg_update = list(self.preprocessor.preprocess_partitioned_tables([args["table"]]))[0]
+            table, arg_update = list(
+                self.preprocessor.preprocess_partitioned_tables([args["table"]])
+            )[0]
             args["table"] = table
             args.update(arg_update)
             yield args
@@ -565,15 +573,25 @@ class PartitionManager:
             facet_key = []
             if "current_partition" in args:
                 partition = args["current_partition"]
-                if "preprocess_hist" in self.groups or "preprocess_violin" in self.groups:
+                if (
+                    "preprocess_hist" in self.groups
+                    or "preprocess_violin" in self.groups
+                ):
                     # offsetgroup is needed mostly to prevent spacing issues in
                     # marginals
                     # not setting the offsetgroup and having both marginals set to box,
                     # violin, etc. leads to extra spacing in each marginal
                     # offsetgroup needs to be unique within the subchart as columns
                     # could have the same name
-                    fig.fig.update_traces(offsetgroup=f"{'-'.join(args['current_partition'])}{i}")
-                facet_key.extend([partition.get(self.facet_col, None), partition.get(self.facet_row, None)])
+                    fig.fig.update_traces(
+                        offsetgroup=f"{'-'.join(args['current_partition'])}{i}"
+                    )
+                facet_key.extend(
+                    [
+                        partition.get(self.facet_col, None),
+                        partition.get(self.facet_row, None),
+                    ]
+                )
             facet_key = tuple(facet_key)
 
             if "preprocess_hist" in self.groups or "preprocess_violin" in self.groups:

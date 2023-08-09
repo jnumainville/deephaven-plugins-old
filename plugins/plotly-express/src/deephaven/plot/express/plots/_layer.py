@@ -10,9 +10,7 @@ from ._update_wrapper import default_callback, unsafe_figure_update_wrapper
 
 
 def normalize_position(
-        position: float,
-        chart_start: float,
-        chart_range: float
+    position: float, chart_start: float, chart_range: float
 ) -> float:
     """Normalize a position so that it falls between 0 and 1 (inclusive)
 
@@ -28,9 +26,7 @@ def normalize_position(
 
 
 def get_new_positions(
-        new_domain: list[float],
-        positions: list[float],
-        chart_domain: list[float]
+    new_domain: list[float], positions: list[float], chart_domain: list[float]
 ) -> list[float]:
     """Get positions within the new domain of an arbitrary list of positions
     The positions will first be normalized to fall between 0 and 1 inclusive
@@ -59,10 +55,7 @@ def get_new_positions(
     return new_positions
 
 
-def resize_domain(
-        obj: dict,
-        new_domain: dict[str, list[float]]
-) -> None:
+def resize_domain(obj: dict, new_domain: dict[str, list[float]]) -> None:
     """Resize the domain of the given object
 
     Args:
@@ -91,11 +84,7 @@ def resize_domain(
         pass
 
 
-def resize_xy_axis(
-        axis: dict,
-        new_domain: dict[str, list[float]],
-        which: str
-) -> None:
+def resize_xy_axis(axis: dict, new_domain: dict[str, list[float]], which: str) -> None:
     """Resize either an x or y axis.
 
     Args:
@@ -114,14 +103,22 @@ def resize_xy_axis(
     try:
         if which == "x":
             if new_domain_x:
-                axis_update["domain"] = get_new_positions(new_domain_x, axis_domain, [0, 1])
+                axis_update["domain"] = get_new_positions(
+                    new_domain_x, axis_domain, [0, 1]
+                )
             if new_domain_y and axis_position is not None:
-                axis_update["position"] = get_new_positions(new_domain_y, axis_position, [0, 1])[0]
+                axis_update["position"] = get_new_positions(
+                    new_domain_y, axis_position, [0, 1]
+                )[0]
         else:
             if new_domain_y:
-                axis_update["domain"] = get_new_positions(new_domain_y, axis_domain, [0, 1])
+                axis_update["domain"] = get_new_positions(
+                    new_domain_y, axis_domain, [0, 1]
+                )
             if new_domain_x and axis_position is not None:
-                axis_update["position"] = get_new_positions(new_domain_x, axis_position, [0, 1])[0]
+                axis_update["position"] = get_new_positions(
+                    new_domain_x, axis_position, [0, 1]
+                )[0]
 
         axis.update(axis_update)
     except ValueError:
@@ -129,10 +126,7 @@ def resize_xy_axis(
         pass
 
 
-def reassign_axes(
-        trace: dict,
-        axes_remapping: dict[str, str]
-) -> None:
+def reassign_axes(trace: dict, axes_remapping: dict[str, str]) -> None:
     """Update the trace with its new axes using with the remapping
 
     Args:
@@ -140,26 +134,23 @@ def reassign_axes(
       axes_remapping: dict[str, str]: The mapping of old to new axes
 
     """
-    if 'xaxis' in trace:
-        trace.update(xaxis=axes_remapping[trace['xaxis']])
+    if "xaxis" in trace:
+        trace.update(xaxis=axes_remapping[trace["xaxis"]])
 
-    if 'yaxis' in trace:
-        trace.update(yaxis=axes_remapping[trace['yaxis']])
+    if "yaxis" in trace:
+        trace.update(yaxis=axes_remapping[trace["yaxis"]])
 
-    if 'scene' in trace:
-        trace.update(scene=axes_remapping[trace['scene']])
+    if "scene" in trace:
+        trace.update(scene=axes_remapping[trace["scene"]])
 
-    if 'subplot' in trace:
-        trace.update(subplot=axes_remapping[trace['subplot']])
+    if "subplot" in trace:
+        trace.update(subplot=axes_remapping[trace["subplot"]])
 
-    if 'ternary' in trace:
-        trace.update(ternary=axes_remapping[trace['ternary']])
+    if "ternary" in trace:
+        trace.update(ternary=axes_remapping[trace["ternary"]])
 
 
-def reassign_attributes(
-        axis: dict,
-        axes_remapping: dict[str, str]
-) -> None:
+def reassign_attributes(axis: dict, axes_remapping: dict[str, str]) -> None:
     """Reassign attributes of a layout object using with the remapping
 
     Args:
@@ -168,19 +159,15 @@ def reassign_attributes(
 
     """
     # anchor can also be free, which does not need to be modified
-    if 'anchor' in axis and axis['anchor'] in axes_remapping:
-        axis.update(anchor=axes_remapping[axis['anchor']])
+    if "anchor" in axis and axis["anchor"] in axes_remapping:
+        axis.update(anchor=axes_remapping[axis["anchor"]])
 
-    if 'overlaying' in axis and axis['overlaying'] in axes_remapping:
-        axis.update(overlaying=axes_remapping[axis['overlaying']])
+    if "overlaying" in axis and axis["overlaying"] in axes_remapping:
+        axis.update(overlaying=axes_remapping[axis["overlaying"]])
 
 
 def resize_axis(
-        type_: str,
-        old_axis: str,
-        axis: dict,
-        num: str,
-        new_domain: dict[str, list[float]]
+    type_: str, old_axis: str, axis: dict, num: str, new_domain: dict[str, list[float]]
 ) -> tuple[str, str, str]:
     """Maps the specified axis to new_domain and returns info to help remap axes
 
@@ -200,7 +187,7 @@ def resize_axis(
 
     """
     new_axis = f"{type_}{num}"
-    if type_ == 'xaxis' or type_ == 'yaxis':
+    if type_ == "xaxis" or type_ == "yaxis":
         which = type_[0]
         resize_xy_axis(axis, new_domain, which)
         old_trace_axis = old_axis.replace(type_, which)
@@ -210,10 +197,7 @@ def resize_axis(
         return new_axis, old_axis, new_axis
 
 
-def get_axis_update(
-        spec: dict[str, Any],
-        type_: str
-) -> dict[str, Any] | None:
+def get_axis_update(spec: dict[str, Any], type_: str) -> dict[str, Any] | None:
     """Retrieve an axis update from the spec
 
     Args:
@@ -224,19 +208,19 @@ def get_axis_update(
       dict[str, Any] | None: A dictionary of updates to make to the x or y-axis
 
     """
-    if 'xaxis_update' in spec and type_ == "xaxis":
+    if "xaxis_update" in spec and type_ == "xaxis":
         return spec["xaxis_update"]
-    if 'yaxis_update' in spec and type_ == "yaxis":
+    if "yaxis_update" in spec and type_ == "yaxis":
         return spec["yaxis_update"]
     return {}
 
 
 def match_axes(
-        type_: str,
-        spec: dict[str, str | bool | list[float]],
-        matches_axes: dict[Any, dict[int, str]],
-        axis_indices: dict[str, int],
-        new_trace_axis: str
+    type_: str,
+    spec: dict[str, str | bool | list[float]],
+    matches_axes: dict[Any, dict[int, str]],
+    axis_indices: dict[str, int],
+    new_trace_axis: str,
 ) -> dict[str, str]:
     """
     Create an update to the axis if this axis matches another axis
@@ -277,11 +261,11 @@ def match_axes(
 
 
 def resize_fig(
-        fig_data: dict,
-        fig_layout: dict,
-        spec: dict[str, str | bool | list[float]],
-        new_axes_start: dict[str, int],
-        matches_axes: dict[Any, dict[int, str]]
+    fig_data: dict,
+    fig_layout: dict,
+    spec: dict[str, str | bool | list[float]],
+    new_axes_start: dict[str, int],
+    matches_axes: dict[Any, dict[int, str]],
 ) -> tuple[dict, dict]:
     """Resize a figure into new_domain, reindexing with the indices specified in
     new_axes_start
@@ -317,10 +301,7 @@ def resize_fig(
 
     # keep track of the axis number within the chart so these axes can be
     # appropriately linked across charts
-    axis_indices = {
-        "xaxis": 0,
-        "yaxis": 0
-    }
+    axis_indices = {"xaxis": 0, "yaxis": 0}
 
     for name, obj in fig_layout.items():
         # todo: coloraxis; thickness, len, x, y
@@ -350,14 +331,11 @@ def resize_fig(
             update = get_axis_update(spec, type_)
 
             new_axis, old_trace_axis, new_trace_axis = resize_axis(
-                type_, name, obj, num, spec)
+                type_, name, obj, num, spec
+            )
 
             matches_update = match_axes(
-                type_,
-                spec,
-                matches_axes,
-                axis_indices,
-                new_trace_axis
+                type_, spec, matches_axes, axis_indices, new_trace_axis
             )
 
             obj.update(**update, **matches_update)
@@ -390,12 +368,12 @@ def resize_fig(
 
 
 def fig_data_and_layout(
-        fig: Figure,
-        i: int,
-        specs: list[dict[str, str | bool | list[float]]],
-        which_layout: int,
-        new_axes_start: dict[str, int],
-        matches_axes: dict[Any, dict[int, str]]
+    fig: Figure,
+    i: int,
+    specs: list[dict[str, str | bool | list[float]]],
+    which_layout: int,
+    new_axes_start: dict[str, int],
+    matches_axes: dict[Any, dict[int, str]],
 ) -> tuple[tuple | dict, dict]:
     """Get new data and layout for the specified figure
 
@@ -422,21 +400,26 @@ def fig_data_and_layout(
 
     """
     if specs:
-        return resize_fig(fig.to_dict()['data'], fig.to_dict()['layout'],
-                          specs[i], new_axes_start, matches_axes)
+        return resize_fig(
+            fig.to_dict()["data"],
+            fig.to_dict()["layout"],
+            specs[i],
+            new_axes_start,
+            matches_axes,
+        )
 
     fig_layout = {}
     if which_layout is None or which_layout == i:
-        fig_layout.update(fig.to_dict()['layout'])
+        fig_layout.update(fig.to_dict()["layout"])
 
     return fig.data, fig_layout
 
 
 def layer(
-        *figs: DeephavenFigure | Figure,
-        which_layout: int = None,
-        specs: list[dict[str, Any]] = None,
-        unsafe_update_figure: callable = default_callback
+    *figs: DeephavenFigure | Figure,
+    which_layout: int = None,
+    specs: list[dict[str, Any]] = None,
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """Layers the provided figures. Be default, the layouts are sequentially
     applied, so the layouts of later figures will override the layouts of early
@@ -478,13 +461,7 @@ def layer(
     new_has_color = False
 
     # when recreating axes, need to keep track of start of new axes
-    new_axes_start = {
-        "xaxis": 1,
-        "yaxis": 1,
-        "scene": 1,
-        "polar": 1,
-        "ternary": 1
-    }
+    new_axes_start = {"xaxis": 1, "yaxis": 1, "scene": 1, "polar": 1, "ternary": 1}
 
     matches_axes = {}
 
@@ -500,7 +477,9 @@ def layer(
         elif isinstance(arg, DeephavenFigure):
             offset = len(new_data)
             if arg.has_subplots:
-                raise NotImplementedError("Cannot currently add figure with subplots as a subplot")
+                raise NotImplementedError(
+                    "Cannot currently add figure with subplots as a subplot"
+                )
             fig_data, fig_layout = fig_data_and_layout(
                 arg.fig, i, specs, which_layout, new_axes_start, matches_axes
             )
@@ -516,10 +495,7 @@ def layer(
 
     new_fig = Figure(data=new_data, layout=new_layout)
 
-    update_wrapper = partial(
-        unsafe_figure_update_wrapper,
-        unsafe_update_figure
-    )
+    update_wrapper = partial(unsafe_figure_update_wrapper, unsafe_update_figure)
 
     # todo: this doesn't maintain call args, but that isn't currently needed
     return update_wrapper(
@@ -528,6 +504,6 @@ def layer(
             data_mappings=new_data_mappings,
             has_template=new_has_template,
             has_color=new_has_color,
-            has_subplots=True if specs else False
+            has_subplots=True if specs else False,
         )
     )

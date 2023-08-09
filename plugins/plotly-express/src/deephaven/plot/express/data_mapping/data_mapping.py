@@ -12,9 +12,7 @@ from .data_mapping_constants import CUSTOM_DATA_ARGS, OVERRIDES, REMOVE
 from ..shared import combined_generator
 
 
-def get_data_groups(
-        data_vals: Iterable[str | list[str]]
-) -> Iterable[tuple[str, ...]]:
+def get_data_groups(data_vals: Iterable[str | list[str]]) -> Iterable[tuple[str, ...]]:
     """Generate a cartesian product between all items in the provided iterable
 
     Args:
@@ -37,9 +35,7 @@ def get_data_groups(
     return product(*data_groups)
 
 
-def overriden_keys(
-        keys: list[str]
-) -> Generator[str]:
+def overriden_keys(keys: list[str]) -> Generator[str]:
     """Override all keys provided with values in OVERRIDES if applicable
 
     Args:
@@ -54,7 +50,7 @@ def overriden_keys(
 
 
 def get_var_col_dicts(
-        data_dict: dict[str, str | list[str]]
+    data_dict: dict[str, str | list[str]]
 ) -> Generator[dict[str, str]]:
     """Generate variable to column mappings. The keys in the dictionary will be
     the keys in the new dictionary items, and a cartesian product will be
@@ -89,10 +85,7 @@ def get_var_col_dicts(
         yield dict(zip(overriden_keys(list(data_dict.keys())), data_group))
 
 
-def custom_data_args_generator(
-        var: str,
-        cols: list[str]
-) -> Generator[tuple[str, str]]:
+def custom_data_args_generator(var: str, cols: list[str]) -> Generator[tuple[str, str]]:
     """Generate data mappings for custom data args
 
     Args:
@@ -108,8 +101,7 @@ def custom_data_args_generator(
 
 
 def add_custom_data_args(
-        var_col_dicts: Generator[dict[str, str]],
-        custom_call_args: dict[str, Any] = None
+    var_col_dicts: Generator[dict[str, str]], custom_call_args: dict[str, Any] = None
 ) -> Generator[dict[str, str]]:
     """Given the existing variable to column mappings, add error bars
 
@@ -135,9 +127,7 @@ def add_custom_data_args(
         yield {**var_col_dict, **custom_dict}
 
 
-def filter_none(
-        var_col_dicts: Generator[dict[str, str]]
-) -> Generator[dict[str, str]]:
+def filter_none(var_col_dicts: Generator[dict[str, str]]) -> Generator[dict[str, str]]:
     """Filters key, value pairs that have None values from the dictionaries.
 
     Args:
@@ -152,7 +142,7 @@ def filter_none(
 
 
 def remove_unmapped_args(
-        data_dict: dict[str, str | list[str]]
+    data_dict: dict[str, str | list[str]]
 ) -> dict[str, str | list[str]]:
     """Removed any args that do not need to be in the data mapping
 
@@ -170,9 +160,7 @@ def remove_unmapped_args(
     return data_dict
 
 
-def zip_args(
-        data_dict: dict[str, str | list[str]]
-) -> Generator[dict[str, str]]:
+def zip_args(data_dict: dict[str, str | list[str]]) -> Generator[dict[str, str]]:
     """Yields var_col_dicts, similarly to get_var_col_dicts
     Special case for OHLC and Candlestick as their data mappings are applied
     sequentially rather than in a product
@@ -184,9 +172,13 @@ def zip_args(
         dict[str, str]: A dictionary with zipped args
     """
     for x_f, o, h, l, c in zip_longest(
-            data_dict["x_finance"], data_dict["open"], data_dict["high"],
-            data_dict["low"], data_dict["close"],
-            fillvalue=data_dict["x_finance"][0]):
+        data_dict["x_finance"],
+        data_dict["open"],
+        data_dict["high"],
+        data_dict["low"],
+        data_dict["close"],
+        fillvalue=data_dict["x_finance"][0],
+    ):
         yield {
             "x": x_f,
             "open": o,
@@ -197,10 +189,10 @@ def zip_args(
 
 
 def create_data_mapping(
-        data_dict: dict[str, str | list[str]],
-        custom_call_args: dict[str, Any],
-        table: Table,
-        start_index: int,
+    data_dict: dict[str, str | list[str]],
+    custom_call_args: dict[str, Any],
+    table: Table,
+    start_index: int,
 ) -> tuple[DataMapping, list[dict[str, str]]]:
     """Create a data mapping of variable to table column as well as a mapping
     copy for the hover text.
@@ -240,7 +232,4 @@ def create_data_mapping(
     mappings = list(var_col_dicts)
 
     # must copy mappings as they might be relabeled
-    return DataMapping(
-        table,
-        mappings,
-        start_index), deepcopy(mappings)
+    return DataMapping(table, mappings, start_index), deepcopy(mappings)

@@ -8,22 +8,26 @@ import itertools
 
 __version__ = "0.1.2"
 
+
 def _init_theme():
     # Set the Deephaven style globally.
     # We use the savefig function to export the Figure, and that uses the Figure's properties for colours rather than temporary styling.
     # The Figure's properties are set on creation time of the Figure, rather than when the Figure is exported
     # We do not have hooks into when a user creates a new Figure, so we set the theme globally ahead of time
     # https://github.com/matplotlib/matplotlib/issues/6592/
-    with resources.path(__package__, 'deephaven.mplstyle') as p:
-        plt.style.use(['dark_background',p])
+    with resources.path(__package__, "deephaven.mplstyle") as p:
+        plt.style.use(["dark_background", p])
+
 
 class MatplotlibRegistration(Registration):
     @classmethod
     def register_into(cls, callback: Registration.Callback) -> None:
         _init_theme()
-        plt.switch_backend('AGG')
+        plt.switch_backend("AGG")
         from . import figure_type
+
         callback.register(figure_type.FigureType)
+
 
 class TableEventSource:
     """
@@ -88,6 +92,7 @@ class TableEventSource:
             self._listener.stop()
             self._listener = None
 
+
 class TableAnimation(Animation):
     """
     Makes an animation by calling a function *func* whenever the Deephaven Table *table* is updated.
@@ -122,6 +127,7 @@ class TableAnimation(Animation):
         Additional arguments to pass to each call to *func*.
 
     """
+
     def __init__(self, fig, table, func, columns=None, fargs=None, **kwargs):
         if fargs:
             self._args = fargs

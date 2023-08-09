@@ -12,39 +12,41 @@ from ..deephaven_figure import generate_figure, DeephavenFigure
 
 
 def bar(
-        table: Table = None,
-        x: str | list[str] = None,
-        y: str | list[str] = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        color: str | list[str] = None,
-        pattern_shape: str | list[str] = None,
-        error_x: str = None,
-        error_x_minus: str = None,
-        error_y: str = None,
-        error_y_minus: str = None,
-        text: str = None,
-        hover_name: str = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        pattern_shape_sequence: list[str] = None,
-        pattern_shape_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        color_continuous_scale: list[str] = None,
-        range_color: list[Number] = None,
-        color_continuous_midpoint: Number = None,
-        opacity: float = None,
-        barmode: str = 'relative',
-        log_x: bool = False,
-        log_y: bool = False,
-        range_x: list[int] = None,
-        range_y: list[int] = None,
-        text_auto: bool | str = False,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    x: str | list[str] = None,
+    y: str | list[str] = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    color: str | list[str] = None,
+    pattern_shape: str | list[str] = None,
+    error_x: str = None,
+    error_x_minus: str = None,
+    error_y: str = None,
+    error_y_minus: str = None,
+    text: str = None,
+    hover_name: str = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    pattern_shape_sequence: list[str] = None,
+    pattern_shape_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    color_continuous_scale: list[str] = None,
+    range_color: list[Number] = None,
+    color_continuous_midpoint: Number = None,
+    opacity: float = None,
+    barmode: str = "relative",
+    log_x: bool = False,
+    log_y: bool = False,
+    range_x: list[int] = None,
+    range_y: list[int] = None,
+    text_auto: bool | str = False,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """Returns a bar chart
 
@@ -179,21 +181,21 @@ def bar(
 
 
 def _bar_polar(
-        table: Table = None,
-        r: str = None,
-        theta: str = None,
-        color_discrete_sequence: list[str] = None,
-        pattern_shape_sequence: list[str] = None,
-        # barnorm: str = None,
-        barmode: str = 'relative',
-        direction: str = 'clockwise',
-        start_angle: int = 90,
-        range_r: list[int] = None,
-        range_theta: list[int] = None,
-        log_r: bool = False,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    r: str = None,
+    theta: str = None,
+    color_discrete_sequence: list[str] = None,
+    pattern_shape_sequence: list[str] = None,
+    # barnorm: str = None,
+    barmode: str = "relative",
+    direction: str = "clockwise",
+    start_angle: int = 90,
+    range_r: list[int] = None,
+    range_theta: list[int] = None,
+    log_r: bool = False,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: callable = default_callback,
 ) -> DeephavenFigure:
     """
 
@@ -228,32 +230,34 @@ def _bar_polar(
 
 
 def timeline(
-        table: str = None,
-        x_start: str = None,
-        x_end: str = None,
-        y: str = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        color: str | list[str] = None,
-        pattern_shape: str | list[str] = None,
-        text: str = None,
-        hover_name: str = None,
-        labels: dict[str, str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        pattern_shape_sequence: list[str] = None,
-        pattern_shape_map: str | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]] | dict[
-            str | tuple[str], str] = None,
-        color_continuous_scale: list[str] = None,
-        range_color: list[Number] = None,
-        color_continuous_midpoint: Number = None,
-        opacity: float = None,
-        range_x: list[int] = None,
-        range_y: list[int] = None,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: callable = default_callback
+    table: str = None,
+    x_start: str = None,
+    x_end: str = None,
+    y: str = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    color: str | list[str] = None,
+    pattern_shape: str | list[str] = None,
+    text: str = None,
+    hover_name: str = None,
+    labels: dict[str, str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    pattern_shape_sequence: list[str] = None,
+    pattern_shape_map: str
+    | tuple[str, dict[str | tuple[str], dict[str | tuple[str], str]]]
+    | dict[str | tuple[str], str] = None,
+    color_continuous_scale: list[str] = None,
+    range_color: list[Number] = None,
+    color_continuous_midpoint: Number = None,
+    opacity: float = None,
+    range_x: list[int] = None,
+    range_y: list[int] = None,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: callable = default_callback,
 ):
     """Returns a timeline (otherwise known as a gantt chart)
 
@@ -356,28 +360,28 @@ def timeline(
 
 
 def frequency_bar(
-        table: Table = None,
-        x: str | list[str] = None,
-        y: str | list[str] = None,
-        by: str | list[str] = None,
-        by_vars: str | list[str] = "color",
-        labels: dict[str, str] = None,
-        color: str | list[str] = None,
-        pattern_shape: str | list[str] = None,
-        color_discrete_sequence: list[str] = None,
-        color_discrete_map: dict[str | tuple[str], str] = None,
-        pattern_shape_sequence: list[str] = None,
-        pattern_shape_map: dict[str | tuple[str], str] = None,
-        opacity: float = None,
-        barmode: str = 'relative',
-        log_x: bool = False,
-        log_y: bool = False,
-        range_x: list[int] = None,
-        range_y: list[int] = None,
-        text_auto: bool | str = False,
-        title: str = None,
-        template: str = None,
-        unsafe_update_figure: callable = default_callback
+    table: Table = None,
+    x: str | list[str] = None,
+    y: str | list[str] = None,
+    by: str | list[str] = None,
+    by_vars: str | list[str] = "color",
+    labels: dict[str, str] = None,
+    color: str | list[str] = None,
+    pattern_shape: str | list[str] = None,
+    color_discrete_sequence: list[str] = None,
+    color_discrete_map: dict[str | tuple[str], str] = None,
+    pattern_shape_sequence: list[str] = None,
+    pattern_shape_map: dict[str | tuple[str], str] = None,
+    opacity: float = None,
+    barmode: str = "relative",
+    log_x: bool = False,
+    log_y: bool = False,
+    range_x: list[int] = None,
+    range_y: list[int] = None,
+    text_auto: bool | str = False,
+    title: str = None,
+    template: str = None,
+    unsafe_update_figure: callable = default_callback,
 ):
     """Returns a bar chart that contains the counts of the specified columns
 
@@ -473,4 +477,5 @@ def frequency_bar(
     args = locals()
 
     return process_args(
-        args, {"bar", "preprocess_freq", "supports_lists"}, px_func=px.bar)
+        args, {"bar", "preprocess_freq", "supports_lists"}, px_func=px.bar
+    )

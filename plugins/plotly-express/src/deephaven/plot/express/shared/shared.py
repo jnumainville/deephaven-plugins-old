@@ -6,8 +6,7 @@ from deephaven.table import Table, PartitionedTable
 
 
 def combined_generator(
-        generators: list[Generator[tuple | dict]],
-        fill: any = None
+    generators: list[Generator[tuple | dict]], fill: any = None
 ) -> Generator[dict]:
     """Combines generators into dictionary updates iteratively
     One yield of this combined generator yields one yield from each dictionary,
@@ -38,10 +37,7 @@ def combined_generator(
             yield fill
 
 
-def get_unique_names(
-        table: Table,
-        orig_names: list[str]
-) -> dict[str, str]:
+def get_unique_names(table: Table, orig_names: list[str]) -> dict[str, str]:
     """Calculate names that do not occur in table, starting from the names in orig_names
 
     Args:
@@ -61,6 +57,6 @@ def get_unique_names(
     for name in orig_names:
         new_name = name
         while new_name in table_columns or new_name in new_names:
-            new_name = '_' + new_name
+            new_name = "_" + new_name
         new_names[name] = new_name
     return new_names
