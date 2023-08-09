@@ -4,6 +4,7 @@ The Deephaven Plugin for matplotlib. Allows for opening matplotlib plots in a De
 should be viewable by default. For example:
 ```python
 import matplotlib.pyplot as plt
+
 fig = plt.figure()
 ax = fig.subplots()  # Create a figure containing a single axes.
 ax.plot([1, 2, 3, 4], [4, 2, 6, 7])  # Plot some data on the axes.
@@ -24,17 +25,21 @@ from deephaven.plugin.matplotlib import TableAnimation
 # Create a ticking table with the sin function
 tt = time_table("00:00:01").update(["x=i", "y=Math.sin(x)"])
 
-fig = plt.figure()      # Create a new figure
-ax = fig.subplots()     # Add an axes to the figure
-line, = ax.plot([],[])  # Plot a line. Start with empty data, will get updated with table updates.
+fig = plt.figure()  # Create a new figure
+ax = fig.subplots()  # Add an axes to the figure
+(line,) = ax.plot(
+    [], []
+)  # Plot a line. Start with empty data, will get updated with table updates.
+
 
 # Define our update function. We only look at `data` here as the data is already stored in the format we want
 def update_fig(data, update):
-    line.set_data([data['x'], data['y']])
-    
+    line.set_data([data["x"], data["y"]])
+
     # Resize and scale the axes. Our data may have expanded and we don't want it to appear off screen.
     ax.relim()
     ax.autoscale_view(True, True, True)
+
 
 # Create our animation. It will listen for updates on `tt` and call `update_fig` whenever there is an update
 ani = TableAnimation(fig, tt, update_fig)
@@ -47,28 +52,32 @@ import matplotlib.pyplot as plt
 from deephaven import time_table
 from deephaven.plugin.matplotlib import TableAnimation
 
-tt = time_table("00:00:01").update(["x=Math.random()", "y=Math.random()", "z=Math.random()*50"])
+tt = time_table("00:00:01").update(
+    ["x=Math.random()", "y=Math.random()", "z=Math.random()*50"]
+)
 
 fig = plt.figure()
 ax = fig.subplots()
 ax.set_xlim(0, 1)
 ax.set_ylim(0, 1)
-scat = ax.scatter([],[])    # Provide empty data initially
-scatter_offsets = []        # Store separate arrays for offsets and sizes
+scat = ax.scatter([], [])  # Provide empty data initially
+scatter_offsets = []  # Store separate arrays for offsets and sizes
 scatter_sizes = []
 
+
 def update_fig(data, update):
-    # This assumes that table is always increasing. Otherwise need to look at other 
+    # This assumes that table is always increasing. Otherwise need to look at other
     # properties in update for creates and removed items
     added = update.added()
-    for i in range(0, len(added['x'])):
+    for i in range(0, len(added["x"])):
         # Append new data to the sources
-        scatter_offsets.append([added['x'][i], added['y'][i]])
-        scatter_sizes.append(added['z'][i])
+        scatter_offsets.append([added["x"][i], added["y"][i]])
+        scatter_sizes.append(added["z"][i])
 
     # Update the figure
     scat.set_offsets(scatter_offsets)
     scat.set_sizes(scatter_sizes)
+
 
 ani = TableAnimation(fig, tt, update_fig)
 ```
@@ -80,27 +89,31 @@ import matplotlib.pyplot as plt
 from deephaven import time_table
 from deephaven.plugin.matplotlib import TableAnimation
 
-tt = time_table("00:00:01").update(["x=i", "y=Math.sin(x)", "z=Math.cos(x)", "r=Math.random()", "s=Math.random()*100"])
+tt = time_table("00:00:01").update(
+    ["x=i", "y=Math.sin(x)", "z=Math.cos(x)", "r=Math.random()", "s=Math.random()*100"]
+)
 
 fig = plt.figure()
 ax = fig.subplots()
-line1, = ax.plot([],[])
-line2, = ax.plot([],[])
+(line1,) = ax.plot([], [])
+(line2,) = ax.plot([], [])
 scat = ax.scatter([], [])
 scatter_offsets = []
 scatter_sizes = []
 
+
 def update_fig(data, update):
-    line1.set_data([data['x'], data['y']])
-    line2.set_data([data['x'], data['z']])
+    line1.set_data([data["x"], data["y"]])
+    line2.set_data([data["x"], data["z"]])
     added = update.added()
-    for i in range(0, len(added['x'])):
-        scatter_offsets.append([added['x'][i], added['r'][i]])
-        scatter_sizes.append(added['s'][i])
+    for i in range(0, len(added["x"])):
+        scatter_offsets.append([added["x"][i], added["r"][i]])
+        scatter_sizes.append(added["s"][i])
     scat.set_offsets(scatter_offsets)
     scat.set_sizes(scatter_sizes)
     ax.relim()
     ax.autoscale_view(True, True, True)
+
 
 ani = TableAnimation(fig, tt, update_fig)
 ```
