@@ -1,0 +1,31 @@
+0 silly argv {
+0 silly argv   _: [ 'run' ],
+0 silly argv   stream: true,
+0 silly argv   lernaVersion: '6.6.1',
+0 silly argv   '$0': '/Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/.bin/lerna',
+0 silly argv   script: 'build'
+0 silly argv }
+1 notice cli v6.6.1
+2 verbose rootPath /Users/josephnumainville/Documents/mono/deephaven-js-plugins
+3 info versioning independent
+4 verbose run Nx target configuration was found. Task dependencies will be automatically included.
+5 error Error: Cannot find module '@nrwl/nx-darwin-arm64'
+5 error Require stack:
+5 error - /Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/nx/src/native/index.js
+5 error - /Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/nx/src/hasher/native-file-hasher.js
+5 error - /Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/nx/src/hasher/file-hasher.js
+5 error - /Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/nx/src/project-graph/build-project-graph.js
+5 error - /Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/nx/src/project-graph/project-graph.js
+5 error - /Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/nx/src/project-graph/file-utils.js
+5 error - /Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/nx/src/devkit-exports.js
+5 error - /Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/@nrwl/devkit/index.js
+5 error - /Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/lerna/dist/cli.js
+5 error     at Module._resolveFilename (node:internal/modules/cjs/loader:995:15)
+5 error     at Module._load (node:internal/modules/cjs/loader:841:27)
+5 error     at Module.require (node:internal/modules/cjs/loader:1061:19)
+5 error     at require (node:internal/modules/cjs/helpers:103:18)
+5 error     at Object.<anonymous> (/Users/josephnumainville/Documents/mono/deephaven-js-plugins/node_modules/nx/src/native/index.js:135:29)
+5 error     at Module._compile (node:internal/modules/cjs/loader:1159:14)
+5 error     at Module._extensions..js (node:internal/modules/cjs/loader:1213:10)
+5 error     at Module.load (node:internal/modules/cjs/loader:1037:32)
+5 error     at Module._load (node:internal/modules/cjs/loader:878:12)
