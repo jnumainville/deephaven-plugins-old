@@ -9,7 +9,7 @@
   },
   "defaultBase": "main",
   "namedInputs": {
-    "default": ["{projectRoot}/plugins/*/src/js/*", "!{projectRoot}/plugins/*/src/js/dist/*"]
+    "default": ["{projectRoot}/**/*", "!{projectRoot}/dist/**/*"]
   },
   "targetDefaults": {
     "build": {
