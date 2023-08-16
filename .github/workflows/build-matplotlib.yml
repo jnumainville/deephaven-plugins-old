@@ -7,14 +7,14 @@ on:
   pull_request:
     branches: [ main ]
     paths:
-      - $DIR
+      - ${{ env.DIR }}
   push:
     branches: [ main ]
     tags: [ 'matplotlib-v*' ]
     
 defaults:
   run:
-    working-directory: scripts
+    working-directory: ${{ env.DIR }}
 
 jobs:
   build-dist:
