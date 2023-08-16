@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ main ]
     paths:
-      - ${{ env.DIR }}
+      - '${{ env.DIR }}/**/*'
   push:
     branches: [ main ]
     tags: [ 'json-v*' ]
