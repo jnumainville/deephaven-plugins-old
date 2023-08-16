@@ -6,7 +6,7 @@ from typing import Callable
 from pandas import DataFrame
 import plotly.graph_objects as go
 from plotly.graph_objects import Figure
-
+#dqew
 
 def draw_finance(
     data_frame: DataFrame,
