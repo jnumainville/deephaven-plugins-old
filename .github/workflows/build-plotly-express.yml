@@ -7,14 +7,14 @@ on:
   pull_request:
     branches: [ main ]
     paths:
-      - $DIR
+      - ${{ env.DIR }}
   push:
     branches: [ main ]
     tags: [ 'plotly-express-v*' ]
     
 defaults:
   run:
-    working-directory: $DIR
+    working-directory: ${{ env.DIR }}
 
 jobs:
   build-dist:
