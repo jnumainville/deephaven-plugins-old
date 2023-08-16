@@ -12,6 +12,7 @@ from .data_mapping_constants import CUSTOM_DATA_ARGS, OVERRIDES, REMOVE
 from ..shared import combined_generator
 
 
+
 def get_data_groups(data_vals: Iterable[str | list[str]]) -> Iterable[tuple[str, ...]]:
     """Generate a cartesian product between all items in the provided iterable
 
