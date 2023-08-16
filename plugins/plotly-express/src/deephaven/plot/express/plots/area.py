@@ -191,5 +191,6 @@ def area(
 
     """
     args = locals()
+    # test
 
     return process_args(args, {"area", "line", "supports_lists"}, px_func=px.area)
