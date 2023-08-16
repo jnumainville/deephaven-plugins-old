@@ -1,20 +1,17 @@
 name: Build JSON Plugin
 
-env:
-  DIR: plugins/json
-
 on:
   pull_request:
     branches: [ main ]
     paths:
-      - '${{ env.DIR }}/**/*'
+      - 'plugins/json/**/*'
   push:
     branches: [ main ]
     tags: [ 'json-v*' ]
     
 defaults:
   run:
-    working-directory: ${{ env.DIR }}
+    working-directory: 'plugins/json'
     
 jobs:
   test:
