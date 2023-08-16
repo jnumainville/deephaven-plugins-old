@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ main ]
     paths:
-      - 'plugins/json/**/*'
+      - 'plugins/json/**/'
   push:
     branches: [ main ]
     tags: [ 'json-v*' ]
