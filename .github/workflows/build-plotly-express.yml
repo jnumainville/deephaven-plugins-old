@@ -1,8 +1,5 @@
 name: Build Plotly Express Plugin
 
-env:
-  DIR: plugins/plotly-express
-
 on:
   pull_request:
     branches: [ main ]
