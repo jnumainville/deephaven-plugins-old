@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ main ]
     paths:
-      - '${{ env.DIR }}/**'
+      - 'plugins/plotly-express/**'
   push:
     branches: [ main ]
     tags: [ 'plotly-express-v*' ]
