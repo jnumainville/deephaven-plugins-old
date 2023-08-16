@@ -1,8 +1,5 @@
 name: Build Matplotlib Plugin
 
-env:
-  DIR: plugins/matplotlib
-
 on:
   pull_request:
     branches: [ main ]
