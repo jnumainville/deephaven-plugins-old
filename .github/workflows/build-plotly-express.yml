@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist
-          path: dist/
+          path: 'plugins/plotly-express/dist/'
           if-no-files-found: error
 
       - name: Publish package
