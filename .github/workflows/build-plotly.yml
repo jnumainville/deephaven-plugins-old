@@ -1,20 +1,17 @@
 name: Build Plotly Plugin
 
-env:
-  DIR: plugins/plotly
-
 on:
   pull_request:
     branches: [ main ]
     paths:
-      - '${{ env.DIR }}/**/*'
+      - 'plugins/plotly/**'
   push:
     branches: [ main ]
     tags: [ 'plotly-v*' ]
     
 defaults:
   run:
-    working-directory: ${{ env.DIR }}
+    working-directory: 'plugins/plotly'
 
 jobs:
   build-dist:
